@@ -1,0 +1,15 @@
+# grafana datasource configuration
+apiVersion: 1
+
+datasources:
+  - name: Pyroscope
+    type: phlare
+    basicAuth: false
+    editable: true
+    access: proxy
+    uid: phlare
+    url: http://pyroscope:4040
+    version: 1
+    jsonData:
+        minStep: '15s'
+        backendType: 'pyroscope'

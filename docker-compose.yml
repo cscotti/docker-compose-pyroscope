@@ -1,0 +1,48 @@
+---
+version: '3.9'
+
+services:
+  grafana:
+    image: grafana/grafana:latest
+    hostname: "grafana"
+    container_name: "grafana"
+    ports:
+      - "3000:3000"
+    volumes:
+      # full path
+      - /home/$USER/dev/pyroscope/grafana/grafana-datasource.yaml:/etc/grafana/provisioning/datasources/datasources.yaml
+    environment:
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+      - GF_AUTH_DISABLE_LOGIN_FORM=true
+    networks:
+      - pyroscope
+
+  pyroscope:
+    hostname: pyroscope
+    container_name: pyroscope
+    image: "grafana/pyroscope:latest"
+    deploy:
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "4040:4040"
+    command:
+      - "server"
+    volumes:
+      # full path
+      - /home/$USER/dev/pyroscope/pyroscope/pyroscope-local-config.yaml:/etc/pyroscope/server.yaml
+    networks:
+      - pyroscope
+
+  app:
+    build: .
+    #environment:
+    #  - PYROSCOPE_SERVER_ADDRESS="http://pyroscope:4040"
+    networks:
+      - pyroscope
+
+networks:
+  pyroscope:
+    name: pyroscope
+    driver: bridge
