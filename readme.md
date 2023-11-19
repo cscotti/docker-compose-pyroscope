@@ -13,6 +13,8 @@ Pyroscope<br>
 Grafana<br>
 <http://localhost:3000/>
 
+# Divers
+
 ## Force docker restart
 
 ```
@@ -24,7 +26,7 @@ docker volume rm $(docker volume ls -q)
 docker-compose up
 ```
 
-## sources
+## Sources
 <https://grafana.com/docs/grafana/latest/datasources/grafana-pyroscope/><br>
 <https://github.com/grafana/pyroscope/tree/main/examples/python/simple><br>
 <https://grafana.com/docs/pyroscope/latest/configure-client/language-sdks/python/><br>
